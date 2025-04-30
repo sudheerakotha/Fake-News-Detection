@@ -11,7 +11,7 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 
 # 1. Load the dataset
 print("Loading dataset...")
-df = pd.read_csv(r"C:\Users\sudhe\OneDrive\Desktop\Projects\fake_or_real_news.csv")
+df = pd.read_csv() #Dataset Path
 
 print("\nSample Data:")
 print(df[['title', 'text', 'label']].head())
