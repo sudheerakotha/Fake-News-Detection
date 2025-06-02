@@ -2,7 +2,6 @@
 
 import pandas as pd
 import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -11,7 +10,7 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 
 # 1. Load the dataset
 print("Loading dataset...")
-df = pd.read_csv() #Dataset Path
+df = pd.read_csv("fake_or_real_news.csv")  # Provide the correct path here
 
 print("\nSample Data:")
 print(df[['title', 'text', 'label']].head())
@@ -47,12 +46,23 @@ print("\nEvaluation Report:")
 print(classification_report(y_test, y_pred, target_names=["Fake", "Real"]))
 print(f"Accuracy: {accuracy_score(y_test, y_pred) * 100:.2f}%")
 
-# 8. Plot confusion matrix
+# 8. Plot confusion matrix using matplotlib only
 cm = confusion_matrix(y_test, y_pred)
 plt.figure(figsize=(6, 4))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=["Fake", "Real"], yticklabels=["Fake", "Real"])
+plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
 plt.title("Confusion Matrix")
-plt.xlabel("Predicted Label")
+plt.colorbar()
+tick_marks = np.arange(2)
+plt.xticks(tick_marks, ["Fake", "Real"])
+plt.yticks(tick_marks, ["Fake", "Real"])
+
+thresh = cm.max() / 2
+for i in range(cm.shape[0]):
+    for j in range(cm.shape[1]):
+        plt.text(j, i, cm[i, j], horizontalalignment="center",
+                 color="white" if cm[i, j] > thresh else "black")
+
 plt.ylabel("True Label")
+plt.xlabel("Predicted Label")
 plt.tight_layout()
 plt.show()
